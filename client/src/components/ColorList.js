@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosWithAuth from "./../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -9,11 +9,13 @@ const initialColor = {
 const ColorList = ({ colors, updateColors }) => {
   // console.log(colors);
   const [editing, setEditing] = useState(false);
+  const [colorToDelete, setColorToDelete] = useState(initialColor);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
+    console.log(colorToEdit);
   };
 
   const saveEdit = e => {
@@ -24,7 +26,8 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
+    setColorToDelete(color);
+    axiosWithAuth().delete(`/api/colors/${colorToDelete.id}`);
   };
 
   return (

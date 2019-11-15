@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import axiosWithAuth from "./utils/axiosWithAuth";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import BubblePage from "./components/BubblePage";
 import Logout from "./components/Logout";
-import { getToken } from "./utils/axiosWithAuth";
 
 import Login from "./components/Login";
 import "./styles.scss";
@@ -21,16 +19,18 @@ function App(props) {
           {loggedIn && <Link to="/bubblepage">BubblePage</Link>}
           {loggedIn && <Link to="/logout">Logout</Link>}
         </nav>
-        <Route
-          exact
-          path="/"
-          render={props => <Login {...props} setLoggedIn={setLoggedIn} />}
-        />
-        <PrivateRoute exact path="/bubblepage" component={BubblePage} />
-        <PrivateRoute
-          path="/logout"
-          render={props => <Logout {...props} setLoggedIn={setLoggedIn} />}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => <Login {...props} setLoggedIn={setLoggedIn} />}
+          />
+          <PrivateRoute exact path="/bubblepage" component={BubblePage} />
+          <PrivateRoute
+            path="/logout"
+            render={props => <Logout {...props} setLoggedIn={setLoggedIn} />}
+          />
+        </Switch>
       </div>
     </Router>
   );

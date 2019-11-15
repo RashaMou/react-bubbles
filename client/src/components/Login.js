@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axiosWithAuth from "./../utils/axiosWithAuth";
 
-const Login = () => {
+const Login = props => {
   const [userLogin, setUserLogin] = useState({
     username: "",
     password: ""
@@ -17,13 +17,16 @@ const Login = () => {
   };
 
   const login = e => {
-    e.preventDefault(e);
+    e.preventDefault();
     axiosWithAuth()
       .post("/api/login", userLogin)
-      .then(res => console.log(res))
+      .then(res => {
+        props.setLoggedIn(true);
+        localStorage.setItem("token", res.data.payload);
+        props.history.push("/bubblepage");
+      })
       .catch(err => console.log(err));
   };
-
   return (
     <>
       <h1>Welcome to the Bubble App!</h1>

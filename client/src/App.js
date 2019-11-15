@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { getToken } from "./utils/axiosWithAuth";
 import PrivateRoute from "./components/PrivateRoute";
 import BubblePage from "./components/BubblePage";
 import Logout from "./components/Logout";
@@ -9,16 +10,17 @@ import "./styles.scss";
 
 function App(props) {
   const [loggedIn, setLoggedIn] = useState(false);
+  // const signedIn = getToken();
 
-  console.log("loggedin?", loggedIn);
+  // console.log("loggedin?", signedIn);
   return (
     <Router>
       <div className="App">
-        <nav>
+        {/* <nav>
           {!loggedIn && <Link to="/">Login</Link>}
           {loggedIn && <Link to="/bubblepage">BubblePage</Link>}
           {loggedIn && <Link to="/logout">Logout</Link>}
-        </nav>
+        </nav> */}
         <Switch>
           <Route
             exact
@@ -27,6 +29,7 @@ function App(props) {
           />
           <PrivateRoute exact path="/bubblepage" component={BubblePage} />
           <PrivateRoute
+            exact
             path="/logout"
             render={props => <Logout {...props} setLoggedIn={setLoggedIn} />}
           />

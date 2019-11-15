@@ -55,7 +55,7 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
     axiosWithAuth()
       .post("/api/colors", newColor)
-      .then(console.log(newColor));
+      .then(setDisplayForm(false));
   };
 
   return (
